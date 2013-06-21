@@ -82,7 +82,7 @@ class DatabaseModelView(BaseModule):
 
     @expose('/show-registers/', methods=("GET", "POST"))
     def show_registers(self):
-        db = get_db_instance(session)
+        db = get_db_instance()
         table_list = db.tables
         return self.render('crud/list_tables.html', table_list=table_list)
 
