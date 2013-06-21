@@ -69,4 +69,3 @@ def setup_admin_for(app):
         admin.add_view(viewinstance)
 
     admin.init_app(app)
-

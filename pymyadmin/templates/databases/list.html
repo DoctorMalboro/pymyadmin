@@ -6,10 +6,33 @@
     <div class="span4">
       <div class="page-header">
         <h4>Configure a new database
-      <button class="btn btn-info">+</button></h4>
+      <a href="add" class="btn btn-info">+</a></h4>
       </div>
     </div>
-    <div class="span6">
+    <div class="span12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Connection name</th>
+            <th>User</th>
+            <th>Host</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for db in database_list %}
+          <tr>
+            <td>{{ db.name }}</td>
+            <td>{{ db.user }}</td>
+            <td>{{ db.host }}</td>
+            <td>
+              <a class="btn btn-danger" href="./remove/{{ db.id }}/"><i class="icon-trash icon-white"></i></a>
+              <a class="btn" href="#">Connect</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
