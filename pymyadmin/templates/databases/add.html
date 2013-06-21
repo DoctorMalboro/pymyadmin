@@ -24,9 +24,15 @@
       {{ database_form.host }}
       {# {{ database_form.host.errors }} #}
 
+      {{ database_form.db_name.label }}
+      {{ database_form.db_name }}
+      {{ database_form.db_name.errors }}
+
       {{ database_form.password.label }}
       {{ database_form.password }}
       {# {{ database_form.password.errors }} #}
+
+
       <p>
         <a href="../" class="btn">Cancel</a>
         <button type="submit" class="btn btn-primary">Ok</button>

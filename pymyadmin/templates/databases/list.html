@@ -16,6 +16,7 @@
             <th>Connection name</th>
             <th>User</th>
             <th>Host</th>
+            <th>Engine</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -25,10 +26,11 @@
             <td>{{ db.name }}</td>
             <td>{{ db.user }}</td>
             <td>{{ db.host }}</td>
+            <td>{{ db.engine }}</td>
             <td>
               <a class="btn btn-danger" href="./remove/{{ db.id }}/"><i class="icon-trash icon-white"></i></a>
               <a class="btn" href="./edit/{{ db.id }}/"><i class="icon-edit"></i></a>
-              <a class="btn" href="#">Connect</a>
+              <a class="btn" href="./show-tables/{{ db.id }}/">Show tables</a>
             </td>
           </tr>
           {% endfor %}

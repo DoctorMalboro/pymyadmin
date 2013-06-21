@@ -5,9 +5,8 @@ from forms import DatabaseForm
 from database import db_session
 from flask import (
     redirect,
-    url_for,
     flash,
-    request
+    session
 )
 
 
@@ -60,7 +59,37 @@ class DatabaseModelView(BaseModule):
         if database_form.validate_on_submit():
             database_form.populate_obj(obj)
             db_session.commit()
-            flash("New database added!", "alert-success")
+            flash("New database modify!", "alert-success")
             return redirect('/admin/databases')
 
         return self.render('databases/edit.html', database_form=database_form)
+
+    @expose('/connect/<int:_id>/', methods=("GET", "POST"))
+    def connect(self, _id):
+        if _id is not None:
+            db = Database.query.filter_by(id=_id).first()
+            db.connect()
+            session["db"] = db.id
+            flash("Connected to %s." % (db.name), "success")
+
+        return redirect('/admin/databases')
+
+    @expose('/show-tables/<int:_id>/', methods=("GET", "POST"))
+    def show_tables(self, _id):
+        db = get_db_instance(_id)
+        table_list = db.tables
+        return self.render('crud/list_tables.html', table_list=table_list)
+
+    @expose('/show-registers/', methods=("GET", "POST"))
+    def show_registers(self):
+        db = get_db_instance(session)
+        table_list = db.tables
+        return self.render('crud/list_tables.html', table_list=table_list)
+
+
+def get_db_instance(database_id):
+    if database_id is not None:
+        db = Database.query.filter_by(id=database_id).first()
+        return db.connect()
+    else:
+        return None

@@ -1,8 +1,11 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, PasswordField, SelectField
+from wtforms import TextField, SelectField
 
+# TODO: Change password te password field
+#       Reset password or rewrite modify
 
 ENGINES = (
+    ('', '--'),
     ('mysql', 'MySQL'),
     ('postgresql', 'PostgreSQL'),
     ('sqlite', 'SQLite'),
@@ -15,5 +18,5 @@ class DatabaseForm(Form):
     name = TextField('Name')
     user = TextField('User')
     host = TextField('Host')
-    password = PasswordField('Password')
+    password = TextField('Password')
     db_name = TextField('DB name')
