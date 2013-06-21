@@ -51,3 +51,16 @@ class DatabaseModelView(BaseModule):
             flash("Database connection deleted.", "alert-block")
 
         return redirect('/admin/databases')
+
+    @expose('/edit/<int:_id>/', methods=("GET", "POST"))
+    def edit(self, _id):
+        # TODO: Validations for fields
+        obj = Database.query.filter_by(id=_id).first()
+        database_form = DatabaseForm(obj=obj)
+        if database_form.validate_on_submit():
+            database_form.populate_obj(obj)
+            db_session.commit()
+            flash("New database added!", "alert-success")
+            return redirect('/admin/databases')
+
+        return self.render('databases/edit.html', database_form=database_form)

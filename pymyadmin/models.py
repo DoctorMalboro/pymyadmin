@@ -1,8 +1,11 @@
+from sqlalchemy.orm import mapper
 from sqlalchemy import Column, Integer, String
-from database import Base
+from database import Base, db_session
 
 
 class EngineSupported(Base):
+    query = db_session.query_property()
+
     __tablename__ = 'engine_supported'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=False)
@@ -16,6 +19,8 @@ class EngineSupported(Base):
 
 
 class Database(Base):
+    query = db_session.query_property()
+
     __tablename__ = 'connection'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=False)
