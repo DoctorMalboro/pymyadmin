@@ -1,0 +1,31 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="page-header">
+        <h4>Configure a new database
+      <a href="add" class="btn btn-info">+</a></h4>
+      </div>
+    </div>
+    <div class="span12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Table name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for table in table_list %}
+          <tr>
+            <td>{{ table }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
