@@ -19,7 +19,6 @@ def load_views_from_module(module):
 
     return views
 
-
 def discover_modules_on(path):
 
     rootmod = 'pymyadmin.modules'
