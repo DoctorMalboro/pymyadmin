@@ -1,0 +1,1 @@
+python ./pymyadmin/pma.py

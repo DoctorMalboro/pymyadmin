@@ -1,43 +1,118 @@
 {% extends 'admin/master.html' %}
 {% block body %}
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span4">
-      <div class="page-header">
-        <h4>Configure a new database
-      <a href="add" class="btn btn-info">+</a></h4>
+<div ng-app='myApp'>
+
+  <div class="container-fluid">
+
+    <div class="row-fluid">
+
+      <div class="span12">
+
+        <div class="pull-right">
+          <div class="page-header">
+              <button type="button" data-toggle="modal" data-target="#addDatabaseModal" class="btn btn-primary">Add new database</button>
+          </div>
+        </div>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Connection name</th>
+              <th>Host</th>
+              <th>Engine</th>
+              <th>User</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for db in database_list %}
+            <tr>
+              <td>{{ db.name }}</td>
+              <td>{{ db.host }}</td>
+              <td>{{ db.engine }}</td>
+              <td>{{ db.user }}</td>
+              <td>
+                <a class="btn btn-danger" href="./remove/{{ db.id }}/"><i class="icon-trash icon-white"></i></a>
+                <a class="btn" href="./edit/{{ db.id }}/"><i class="icon-edit"></i></a>
+                <a class="btn" href="./connect/{{ db.id }}/">Connect</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
       </div>
     </div>
-    <div class="span12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Connection name</th>
-            <th>User</th>
-            <th>Host</th>
-            <th>Engine</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for db in database_list %}
-          <tr>
-            <td>{{ db.name }}</td>
-            <td>{{ db.user }}</td>
-            <td>{{ db.host }}</td>
-            <td>{{ db.engine }}</td>
-            <td>
-              <a class="btn btn-danger" href="./remove/{{ db.id }}/"><i class="icon-trash icon-white"></i></a>
-              <a class="btn" href="./edit/{{ db.id }}/"><i class="icon-edit"></i></a>
-              <a class="btn" href="./show-tables/{{ db.id }}/">Show tables</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
   </div>
-</div>
+
+  <!-- database form -->
+  <div id="addDatabaseModal" class="modal hide fade">
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Adding a new database connection</h3>
+    </div>
+
+    <div ng-controller="newDatabaseFormController" class="modal-body">
+        <form name="newDatabase" novalidate ng-submit="submitForm();" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="inputName">Name</label>
+              <div class="controls">
+                <input type="text" name="name" id="inputName" placeholder="Name from you database" ng-model="name" required />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="inputEngine">Engine</label>
+              <div class="controls">
+                <select>
+                  <option value="sqlite">SQLite</option>
+                  <option value="postgresql">PostgreSQL</option>
+                  <option value="oracle">Oracle</option>
+                  <option value="mysql">MySQL</option>
+                </select>
+              </div>
+            </div>
+            <div id="db-optiona-fields">
+              <div class="control-group">
+                <label class="control-label" for="inputHost">Host</label>
+                <div class="controls">
+                  <input type="text" name="host" id="inputHost" placeholder="Where is your database?">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputPort">Port</label>
+                <div class="controls">
+                  <input type="text" name="port" id="inputPort" placeholder="Port number">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputUsername">Username</label>
+                <div class="controls">
+                  <input type="text" name="username" id="inputUsername" placeholder="Username">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputPassword">Password</label>
+                <div class="controls">
+                  <input type="password" name="password" id="inputPassowrd" placeholder="Password">
+                </div>
+              </div>
+            </div>
+
+        </form>
+      </div><!--/modal-body-->
+
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
+
+  </div>
+
+<script type="text/javascript" src="/static/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/databases.js"></script>
+</div><!--/ng-app -->
+
 
 {% endblock %}
